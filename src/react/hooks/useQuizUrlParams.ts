@@ -28,6 +28,14 @@ export const QuizUrlParamsSchema = z.object({
     .string()
     .optional()
     .transform((val) => (val ? val.split(',').map((t) => t.trim()) : undefined)),
+  chapters: z
+    .string()
+    .optional()
+    .transform((val) => (val ? val.split(',').map((t) => t.trim()) : undefined)),
+  order: z
+    .enum(['sequential', 'random'])
+    .optional()
+    .default('sequential'),
   notation: z
     .enum(['letters', 'solfege', 'any'])
     .optional()
@@ -91,7 +99,9 @@ export function urlParamsToFilter(params: ParsedQuizUrlParams): QuestionFilter {
         ? [params.difficulty]
         : undefined,
     topics: params.topics,
+    chapters: params.chapters,
     notation: params.notation,
+    order: params.order,
   };
 }
 

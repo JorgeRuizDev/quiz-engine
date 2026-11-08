@@ -117,9 +117,9 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({
   );
 
   const initSession = useCallback(() => {
-    const shuffled = shuffle(filteredQuestions);
+    const candidateList = filter?.order === 'random' ? shuffle(filteredQuestions) : filteredQuestions;
     const newExcluded = new Set<string>();
-    const { drawn, remaining } = drawNext(shuffled, newExcluded);
+    const { drawn, remaining } = drawNext(candidateList, newExcluded);
 
     setCandidatePool(remaining);
     setSelectedOptionIds([]);

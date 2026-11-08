@@ -29,7 +29,22 @@ export function matchesFilter(question: Question, filter?: QuestionFilter): bool
     }
   }
 
-  // 4. Notation filter (with neutral and dual fallbacks)
+  // 4. Chapters / Weeks filter
+  if (filter.chapters && filter.chapters.length > 0) {
+    const matchesChapter = filter.chapters.some((ch) => {
+      const raw = ch.toLowerCase().trim();
+      const numPart = raw.replace(/^(ch|chapter|week|w)/, '').padStart(2, '0');
+      return (
+        question.id.toLowerCase().includes(`-w${numPart}-`) ||
+        question.id.toLowerCase().startsWith(`w${numPart}-`)
+      );
+    });
+    if (!matchesChapter) {
+      return false;
+    }
+  }
+
+  // 5. Notation filter (with neutral and dual fallbacks)
   if (filter.notation && filter.notation !== 'any') {
     if (
       question.notation !== 'neutral' &&

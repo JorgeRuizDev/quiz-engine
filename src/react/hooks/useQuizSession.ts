@@ -82,11 +82,11 @@ export function createInitialQuizSessionState(
   storageKey: string = DEFAULT_QUIZ_STORAGE_KEY
 ): ExtendedSessionState {
   const matched = filterQuestions(questions, filter);
-  const shuffled = shuffleQuestions(matched);
+  const candidateList = filter?.order === 'random' ? shuffleQuestions(matched) : matched;
 
   const initialExcluded = new Set<string>();
   const { drawn, remainingPool, updatedExcludedFamilies } = drawNextEligible(
-    shuffled,
+    candidateList,
     initialExcluded
   );
 
@@ -114,6 +114,7 @@ export function createInitialQuizSessionState(
       accuracy: 100,
       totalAnswered: 0,
     },
+    totalInSession: matched.length,
   };
 }
 

@@ -20,7 +20,9 @@ export interface QuestionFilter {
   courses?: number[];
   difficulties?: DifficultyLevel[];
   topics?: string[];
+  chapters?: string[];
   notation?: NotationFormat | 'any';
+  order?: 'sequential' | 'random';
 }
 
 export interface QuizSessionState {
@@ -32,6 +34,7 @@ export interface QuizSessionState {
   selectedOptionIds: string[];
   excludedFamilyIds: string[];
   filter: QuestionFilter;
+  totalInSession?: number;
 }
 
 export type QuizSessionAction =
