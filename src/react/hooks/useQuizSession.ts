@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useCallback, useMemo } from 'react';
+import { useReducer, useEffect, useCallback, useMemo, useRef } from 'react';
 import type { Question } from '../../core/types/schema';
 import type {
   QuizSessionState,
@@ -284,9 +284,16 @@ export function useQuizSession(
     initialState
   );
 
+  const isFirstMount = useRef(true);
+  const filterSignature = JSON.stringify(filter);
+
   useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
     dispatch({ type: 'INIT_SESSION', payload: { questions, filter } });
-  }, [questions, filter]);
+  }, [questions, filterSignature]);
 
   const selectOption = useCallback((optionId: string) => {
     dispatch({ type: 'SELECT_OPTION', payload: { optionId } });

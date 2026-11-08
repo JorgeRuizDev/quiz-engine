@@ -23,7 +23,9 @@ export function matchesFilter(question: Question, filter?: QuestionFilter): bool
 
   // 3. Topics intersection filter
   if (filter.topics && filter.topics.length > 0) {
-    const hasTopic = filter.topics.some((t) => question.topics.includes(t));
+    const hasTopic = filter.topics.some((t) =>
+      question.topics.some((qt) => qt.toLowerCase() === t.toLowerCase())
+    );
     if (!hasTopic) {
       return false;
     }
@@ -36,6 +38,7 @@ export function matchesFilter(question: Question, filter?: QuestionFilter): bool
       const numPart = raw.replace(/^(ch|chapter|week|w)/, '').padStart(2, '0');
       return (
         question.id.toLowerCase().includes(`-w${numPart}-`) ||
+        question.id.toLowerCase().startsWith(`ddia-w${numPart}-`) ||
         question.id.toLowerCase().startsWith(`w${numPart}-`)
       );
     });
