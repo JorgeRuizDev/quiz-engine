@@ -239,7 +239,13 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({
 
   if (status === 'SESSION_EXHAUSTED' || !activeQuestion) {
     return (
-      <div className="w-full max-w-md mx-auto p-5 sm:p-6 text-center space-y-4 rounded-2xl border border-slate-800 bg-slate-900/90 shadow-xl backdrop-blur-sm overflow-x-hidden select-none">
+      <div
+        className={`w-full ${
+          embed
+            ? 'p-4 sm:p-6 bg-transparent rounded-none border-0 shadow-none'
+            : 'max-w-md mx-auto p-5 sm:p-6 rounded-2xl border border-slate-800 bg-slate-900/90 shadow-xl'
+        } text-center space-y-4 backdrop-blur-sm overflow-x-hidden select-none`}
+      >
         <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
           {lang === 'es' ? '¡Sesión Completada!' : 'Session Complete!'}
         </h3>
@@ -281,9 +287,13 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({
 
   return (
     <div
-      className={`w-full max-w-md mx-auto flex flex-col items-center justify-start ${
-        isCompact ? 'p-2 max-w-sm' : 'p-3 sm:p-5 max-w-md'
-      } bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl select-none overflow-x-hidden`}
+      className={`w-full flex flex-col items-center justify-start ${
+        embed
+          ? 'p-0 m-0 max-w-none rounded-none border-0 shadow-none bg-transparent'
+          : isCompact
+          ? 'p-2 max-w-sm mx-auto bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl'
+          : 'p-3 sm:p-5 max-w-md mx-auto bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl'
+      } select-none overflow-x-hidden`}
     >
       {/* Header controls: Progress bar and Notation selector */}
       <div className="w-full flex items-center justify-between gap-1.5 pb-2.5 mb-2.5 border-b border-slate-800 text-xs font-mono">
