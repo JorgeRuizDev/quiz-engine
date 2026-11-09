@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Question } from '../../core/types/schema';
 import { OptionGrid } from './OptionGrid';
+import { MatchingQuestionView } from './MatchingQuestionView';
 import { visualRegistry } from '../../core/registry/visualRegistry';
 import { questionTypeRegistry } from '../../core/registry/questionTypeRegistry';
 import { QuestionCard } from './QuestionCard';
@@ -113,6 +114,16 @@ export const QuestionView: React.FC<QuestionViewProps> = ({
             evaluated={evaluated}
             lang={lang}
             compact={compact}
+          />
+        ) : question.type === 'matching' ? (
+          <MatchingQuestionView
+            question={question}
+            selectedPairs={selectedOptionIds}
+            onPairSelected={(leftId, rightId) => onSelectOption(`${leftId}:${rightId}`)}
+            onPairRemoved={(leftId) => onSelectOption(`remove:${leftId}`)}
+            disabled={disabled || evaluated}
+            showFeedback={evaluated}
+            lang={lang}
           />
         ) : question.options && question.options.length > 0 ? (
           <OptionGrid

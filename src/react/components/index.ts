@@ -8,6 +8,7 @@ export * from './SessionMetricsHeader';
 export * from './OptionButton';
 export * from './OptionGrid';
 export * from './QuestionView';
+export * from './MatchingQuestionView';
 export * from './RemediationCard';
 export * from './SessionProgressBar';
 export * from './EmptyPoolNotice';
