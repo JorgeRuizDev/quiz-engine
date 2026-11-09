@@ -3,6 +3,7 @@ import type { Question } from '../../core/types/schema';
 import type { EvaluationResult } from '../../core/engine/evaluator';
 import { visualRegistry } from '../../core/registry/visualRegistry';
 import { BookOpen, CheckCircle } from 'lucide-react';
+import { renderSafeMarkdown } from '../../core/utils/markdown';
 import { QuestionCard } from './QuestionCard';
 import { StimulusContainer } from './StimulusContainer';
 import { MnemonicBanner } from './MnemonicBanner';
@@ -112,9 +113,10 @@ export const RemediationCard: React.FC<RemediationCardProps> = ({
         <div className="w-full space-y-1 text-left mb-2.5">
           <div className="flex items-start gap-2">
             <BookOpen className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
-            <div className="text-xs sm:text-sm text-slate-200 leading-snug whitespace-pre-line font-sans">
-              {explanationText}
-            </div>
+            <div
+              className="text-xs sm:text-sm text-slate-200 leading-snug font-sans space-y-2 prose prose-invert max-w-none"
+              dangerouslySetInnerHTML={{ __html: renderSafeMarkdown(explanationText) }}
+            />
           </div>
         </div>
 
@@ -142,10 +144,10 @@ export const RemediationCard: React.FC<RemediationCardProps> = ({
         {hintText && !mnemonicText && (
           <div className="w-full px-3 py-2 rounded-xl bg-slate-800/60 border border-slate-700/40 text-slate-300 text-xs italic flex items-center gap-2 mb-3">
             <span className="text-sm select-none shrink-0">💡</span>
-            <span className="leading-tight">
+            <div className="leading-tight not-italic">
               <span className="font-semibold">{isEs ? 'Pista: ' : 'Hint: '}</span>
-              {hintText}
-            </span>
+              <span dangerouslySetInnerHTML={{ __html: renderSafeMarkdown(hintText) }} />
+            </div>
           </div>
         )}
 
